@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamVibe - Short Video Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Container Video Scroll */
+        .video-container {
+            height: 100vh;
+            width: 100%;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .video-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
+        }
+
+        .video-card {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #111;
+        }
+
+        video {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        /* Overlay UI */
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            pointer-events: none;
+        }
+
+        .content-info {
+            max-width: 70%;
+            pointer-events: auto;
+        }
+
+        .side-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            pointer-events: auto;
+            margin-bottom: 20px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .action-btn:active {
+            transform: scale(0.9);
+        }
+
+        .action-btn i {
+            font-size: 28px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .action-btn span {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Avatar Spin Animation */
+        .music-disc {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 8px solid #333;
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            background: linear-gradient(rgba(0,0,0,0.5), transparent);
+        }
+
+        .nav-item {
+            font-weight: bold;
+            opacity: 0.7;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            opacity: 1;
+            border-bottom: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <nav class="navbar">
+        <span class="nav-item">Mengikuti</span>
+        <span class="nav-item active">Untuk Anda</span>
+    </nav>
+
+    <!-- Main Video Feed -->
+    <div class="video-container" id="videoFeed">
+        <!-- Video Card Template -->
+        <!-- Video 1 -->
+        <div class="video-card">
+            <video loop preload="auto" playsinline muted>
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-girl-in-neon-light-dancing-2322-large.mp4" type="video/mp4">
+            </video>
+            
+            <div class="overlay">
+                <div class="content-info">
+                    <h3 class="font-bold text-lg mb-1">@cyber_dancer</h3>
+                    <p class="text-sm mb-2">Vibe malam ini di Tokyo! 🏮✨ #cyberpunk #dance #neon</p>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-music text-xs"></i>
+                        <marquee class="text-xs w-32">Original Sound - Cyber Dancer - 2024</marquee>
+                    </div>
+                </div>
+
+                <div class="side-actions">
+                    <div class="mb-4">
+                        <img src="https://i.pravatar.cc/150?u=1" class="w-12 h-12 rounded-full border-2 border-white" alt="avatar">
+                        <div class="bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center -mt-3 mx-auto text-[10px]">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <button class="action-btn like-btn" onclick="toggleLike(this)">
+                        <i class="fas fa-heart"></i>
+                        <span>1.2M</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-comment-dots"></i>
+                        <span>45.2K</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-share"></i>
+                        <span>8.1K</span>
+                    </button>
+                    <div class="music-disc mt-4">
+                        <img src="https://i.pravatar.cc/150?u=music1" class="rounded-full w-full h-full" alt="music">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video 2 -->
+        <div class="video-card">
+            <video loop preload="auto" playsinline muted>
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-leaves-low-angle-shot-1571-large.mp4" type="video/mp4">
+            </video>
+            
+            <div class="overlay">
+                <div class="content-info">
+                    <h3 class="font-bold text-lg mb-1">@nature_vibes</h3>
+                    <p class="text-sm mb-2">Ketenangan di musim gugur. 🍂 #nature #peaceful #aesthetic</p>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-music text-xs"></i>
+                        <marquee class="text-xs w-32">Nature Relaxation - Chill Out</marquee>
+                    </div>
+                </div>
+
+                <div class="side-actions">
+                    <div class="mb-4">
+                        <img src="https://i.pravatar.cc/150?u=2" class="w-12 h-12 rounded-full border-2 border-white" alt="avatar">
+                    </div>
+                    <button class="action-btn like-btn" onclick="toggleLike(this)">
+                        <i class="fas fa-heart"></i>
+                        <span>850K</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-comment-dots"></i>
+                        <span>12.5K</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-share"></i>
+                        <span>2.3K</span>
+                    </button>
+                    <div class="music-disc mt-4">
+                        <img src="https://i.pravatar.cc/150?u=music2" class="rounded-full w-full h-full" alt="music">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="fixed bottom-0 w-full bg-black border-t border-gray-800 flex justify-around items-center py-3 px-4 text-white z-50">
+        <div class="flex flex-col items-center">
+            <i class="fas fa-home text-xl"></i>
+            <span class="text-[10px] mt-1">Beranda</span>
+        </div>
+        <div class="flex flex-col items-center opacity-60">
+            <i class="fas fa-compass text-xl"></i>
+            <span class="text-[10px] mt-1">Jelajah</span>
+        </div>
+        <div class="relative">
+            <div class="bg-white text-black px-4 py-1 rounded-md font-bold text-xl">+</div>
+        </div>
+        <div class="flex flex-col items-center opacity-60">
+            <i class="fas fa-envelope text-xl"></i>
+            <span class="text-[10px] mt-1">Kotak Masuk</span>
+        </div>
+        <div class="flex flex-col items-center opacity-60">
+            <i class="fas fa-user text-xl"></i>
+            <span class="text-[10px] mt-1">Profil</span>
+        </div>
+    </div>
+
+    <script>
+        // Logika Autoplay saat Scroll
+        const videoFeed = document.getElementById('videoFeed');
+        const videos = document.querySelectorAll('video');
+
+        const options = {
+            root: videoFeed,
+            rootMargin: '0px',
+            threshold: 0.5 // Minimal 50% video terlihat untuk diputar
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                if (entry.isIntersecting) {
+                    video.play().catch(e => console.log("User interaction required"));
+                } else {
+                    video.pause();
+                }
+            });
+        }, options);
+
+        videos.forEach(video => {
+            observer.observe(video);
+            
+            // Klik video untuk pause/play
+            video.addEventListener('click', () => {
+                if (video.paused) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            });
+        });
+
+        // Fitur Like (Tiru Instagram)
+        function toggleLike(btn) {
+            const icon = btn.querySelector('i');
+            const span = btn.querySelector('span');
+            
+            if (icon.classList.contains('text-red-500')) {
+                icon.classList.remove('text-red-500', 'fa-solid');
+                icon.classList.add('fa-regular');
+                // Logika pengurangan angka (dummy)
+            } else {
+                icon.classList.add('text-red-500', 'fa-solid', 'animate-ping');
+                setTimeout(() => icon.classList.remove('animate-ping'), 500);
+                // Logika penambahan angka (dummy)
+            }
+        }
+
+        // Handle Muted (Browser policy)
+        // Kebanyakan browser melarang autoplay bersuara tanpa interaksi user
+        window.addEventListener('click', () => {
+            videos.forEach(v => v.muted = false);
+        }, { once: true });
+
+        // Simulasi Infinite Scroll (Tambahkan elemen baru saat scroll ke bawah)
+        videoFeed.addEventListener('scroll', () => {
+            if (videoFeed.scrollTop + videoFeed.clientHeight >= videoFeed.scrollHeight - 20) {
+                console.log("Loading more videos...");
+                // Di sini Anda bisa memanggil API untuk mengambil data video baru
+            }
+        });
+    </script>
+</body>
+</html>
